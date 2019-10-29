@@ -2,17 +2,24 @@ doctype html
 html
   head
     title= title
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+    link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js", integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM", crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
     .container-lecture
-      header
+      section(class="header")
         h3(class="headline") 시간표 만들기
+
       section(class="section-nav")
         form(id="search-form" class="form-search")
           input(type="text" placeholder="강의 검색" class="form-control")
           span
             i(class="material-icons ic-search") search
+
         ul(class="list-lecture")
           li(class="card-lecture")
             a(class="lecture-title" href="#") 웹 프로그래밍
@@ -24,6 +31,147 @@ html
               li 담당 교수 : 김진수
               li 강의실 : 공학관 204
 
+      section(class="section-list")
+        .container-xl
+          header(class="header-timetable-info")
+            h3 2019년 11월
+            .btn-group(role="group")
+              button(type="button" class="btn btn-light btn-previous")
+                i(class="material-icons ic-previous") chevron_left
+              button(type="button" class="btn btn-light btn-today") 오늘
+              button(type="button" class="btn btn-light btn-next")
+                i(class="material-icons ic-next") chevron_right
+
+          .table-schedule
+            .timeline
+              ul
+                li
+                  span 09:00
+                li
+                  span 09:30
+                li
+                  span 10:00
+                li
+                  span 10:30
+                li
+                  span 11:00
+                li
+                  span 11:30
+                li
+                  span 12:00
+                li
+                  span 12:30
+                li
+                  span 13:00
+                li
+                  span 13:30
+                li
+                  span 14:00
+                li
+                  span 14:30
+                li
+                  span 15:00
+                li
+                  span 15:30
+                li
+                  span 16:00
+                li
+                  span 16:30
+                li
+                  span 17:00
+                li
+                  span 17:30
+                li 
+                  span 18:00
+
+            .table-schedule-subject
+              ul(class="list-lecture-item")
+                li(class="timeline-vertical")
+                  .top-info.today
+                    h4(class="day") Mon
+                      h6(class="date") 4
+                      ul
+                        li(class="lecture-time two-hr hr-11" data-event="lecture-01")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 웹 프로그래밍
+                              h6(class="lecture-location") 공학관 204)
+                            .lecture-noti(data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트")
+                              i(class="material-icons ic-lecture-notiassignment")
+                              span(class="lecture-noti-title") 과제 제목 텍스트
+
+                          li(class="lecture-time two-hr hr-13" data-event="lecture-02")
+                            a(href="#")
+                              .lecture-info
+                                h6(class="lecture-title") 프로그래밍의 원리
+                                h6(class="lecture-location") 공학1관 102
+                              .lecture-noti(data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트")
+                                i(class="material-icons ic-lecture-notiassignment")
+                                span(class="lecture-noti-title") 과제 제목 텍스트
+
+                          li(class="lecture-time hr-16" data-event="lecture-03")
+                            a(href="#")
+                              .lecture-info
+                                h6(class="lecture-title") 논리 설계
+                                h6(class="lecture-location") 공학1관 102
+
+                li(class="timeline-vertical")
+                  .top-info
+                    h4(class="day") Tue
+                      ul
+                        li(class="lecture-time two-hr hr-10" data-event="lecture-04")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 자료 구조
+                              h6(class="lecture-location") 공학1관 102
+                            
+                        li(class="lecture-time hr-12" data-event="lecture-05")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 알고리즘
+                              h6(class="lecture-location") 공학1관 102
+
+                        li(class="lecture-time hr-16" data-event="lecture-06")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 컴퓨터 네트워크
+                              h6(class="lecture-location") 공학1관 102
+
+                li(class="timeline-vertical")
+                  .top-info
+                    h4(class="day") Wed
+                      ul
+                        li(class="lecture-time two-hr hr-10" data-event="lecture-01")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 웹 프로그래밍
+                              h6(class="lecture-location") 공학관 204
+
+                        li(class="lecture-time hr-12" data-event="lecture-07")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 컴파일러
+                              h6(class="lecture-location") 공학관 602
+
+                        li(class="lecture-time two-hr hr-13" data-event="lecture-02")
+                          a(href="#")
+                            .lecture-info
+                              h6(class="lecture-title") 프로그래밍의 원리
+                              h6(class="lecture-location") 공학1관 102
+                            .lecture-noti(data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트")
+                              i(class="material-icons ic-lecture-notiassignment")
+                              span(class="lecture-noti-title") 과제 제목 텍스트
+
+                li(class="timeline-vertical")
+                  .top-info
+                    h4(class="day") Thu
+                      ul
+                        
+                li(class="timeline-vertical")
+                  .top-info
+                    h4(class="day") Fri
+                      ul
+                            
     .modal.fade(id="modal-lecture-info" role="dialog" aria-hidden="true")
       .modal-dialog(role="document")
         .modal-content
@@ -67,3 +215,5 @@ html
         label(for="message-text" class="col-form-label") 설명
         textarea(class="form-control" id="message-text" placeholder="설명 추가")
       button(type="button" class="btn btn-primary btn-save") 등록
+  
+  script(src="/js/index.js" type="module")
