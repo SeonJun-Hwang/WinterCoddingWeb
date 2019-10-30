@@ -206,6 +206,51 @@ html
                 button(type="button" class="btn btn-light" data-dismiss="modal") 취소
                 button(type="button" class="btn btn-primary") 과목 등록하기
 
+    .modal.fade(id="modal-lecture-task" role="dialog" aria-hidden="true")
+      .modal-dialog(role="document")
+        .modal-content
+          .modal-header
+            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+          .modal-body
+            h3(class="lecture-title") 웹 프로그래밍
+            ul(class="lecture-info")
+              li(class="lecture-time")
+                i(class="material-icons ic-lecture-info") access_alarm
+                span 강의 시간 : 09:00 - 10:50 | (월), (수)
+              li(class="lecture-code")
+                i(class="material-icons ic-lecture-info") code
+                span 교과목 코드 : A0000001
+              li(class="lecture-code")
+                i(class="material-icons ic-lecture-info") school
+                span 담당 교수 : 김진수
+              li(class="lecture-code")
+                i(class="material-icons ic-lecture-info") business
+                span 강의실 : 공학관 204
+
+              .lecture-description
+                p(class="txt-description") 본 강의에서는 JSP를 이용한 웹 기반 프로그래밍 기초 및 응용기술에 대해 학습합니다. 특히 실습 위주의 수업으로 프로그래밍 스킬 향상 및
+                        |실무 능력을 갖출 수 있도록 합니다.
+
+              .lecture-memo
+                h5(class="memo-header") 메모
+                ul
+                  li(class="memo-list")
+                    .memo-content(data-toggle="tooltip" data-placement="top" title="" data-original-title="과제 설명 텍스트 과제 설명 텍스트 과제 설명 텍스트")
+                      i(class="material-icons ic-lecture-noti") assignment
+                      span(class="lecture-noti-title") 과제 제목 텍스트
+
+                    .memo-btn
+                      a(href="")
+                        i(class="material-icons ic-lecture-noti") delete
+
+          .modal-footer
+            .left
+              button(class="btn btn-light-primary" type="button" data-toggle="popover" data-trigger="click" data-placement="right" data-html="true") 메모 등록
+            .right
+              button(type="button" class="btn btn-light" data-dismiss="modal") 확인
+              button(type="button" class="btn btn-danger") 과목 삭제하기
+
     div(id="PopoverContent" style="display:none")
       h5(class="schedule-title") 메모 등록하기
       .form-group
