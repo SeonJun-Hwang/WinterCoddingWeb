@@ -1,22 +1,20 @@
 'use strict';
 
+const loader = require('csv-load-sync')
+const path = require('path')
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    let datas = [];
-    for(let i = 0; i < 10; i++){
-      let obj = {
-        name: "item" + i,
-        quantity: 10,
-        createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
-        updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-      }
-      datas.push(obj)
-    }
+
+    const datas = loader(path.join(__dirname, 'courses.csv'))
+    for(let data of datas)
+      data.createdAt = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 
     return queryInterface.bulkInsert('Items', datas, {});
   },
 
   down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('Items', null, {})
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.

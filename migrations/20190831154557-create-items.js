@@ -2,26 +2,39 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Items', {
-      id: {
+      code: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      name: {
         type: Sequelize.STRING
       },
-      quantity: {
-        type: Sequelize.INTEGER
+      lecture: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      professor: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      location: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      start_time:{
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      end_time:{
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      dayofweek:{
+        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   down: (queryInterface, Sequelize) => {
