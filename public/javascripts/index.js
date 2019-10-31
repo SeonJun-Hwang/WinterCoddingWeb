@@ -16,16 +16,16 @@ $('.list-lecture').click(event => {
     $('#modal-lecture-info').modal('show');
 });
   
-// $('.timeline-vertical > ul').click(event => {
-//     let target = $(event.target)
-//     if (target.get(0).tagName == 'UL') return;
-//     target = target.closest('.lecture-time')
-//     const dataEvent = target.data('event')
-//     const idx = dataEvent.replace(/[^0-9]/g,'')
-//     renders.scheduleInfo(timetable.getSchedule(idx - 1))
+$('.timeline-vertical > ul').click(event => {
+    let target = $(event.target)
+    if (target.get(0).tagName == 'UL') return;
+    target = target.closest('.lecture-time')
+    const dataEvent = target.data('event')
+    const idx = dataEvent.replace(/[^0-9]/g,'')
+    renders.scheduleInfo(timetable.getSchedule(idx - 1))
 
-//     $('#modal-lecture-task').modal('show');
-// });
+    $('#modal-lecture-task').modal('show');
+});
   
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();

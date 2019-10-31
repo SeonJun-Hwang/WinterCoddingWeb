@@ -30,39 +30,39 @@ export const lectureInfo = (data) => {
     locaInfo.innerText = `강의실 : ${location}`
 }
 
-// export const addSchedule = (data, number) => {
-//     const { lecture, location, start_time, end_time, dayofweek } = data
-//     const dayCol = []
+export const addSchedule = (data, number) => {
+    const { lecture, location, start_time, end_time, dayofweek } = data
+    const dayCol = []
 
-//     for (const ch of dayofweek)
-//         dayCol.push(_converter.dayofweek2Int(ch))
+    for (const ch of dayofweek)
+        dayCol.push(_converter.dayofweek2Int(ch))
 
-//     const domList = _chd(_$l('.list-lecture-item'))
-//     dayCol.forEach((col) => {
-//         const timeList = domList[col].querySelector('ul')
-//         const [className, lectureNum] = _schedule.classNdataEvent(start_time, end_time, number)
-//         timeList.insertAdjacentHTML('beforeend',`<li class="${className}" data-event="${lectureNum}"><a href="#"><div class="lecture-info">${_schedule.title(lecture)}${_schedule.location(location)}</div></a></li>`)
-//     })
-// }
+    const domList = _chd(_$l('.list-lecture-item'))
+    dayCol.forEach((col) => {
+        const timeList = domList[col].querySelector('ul')
+        const [className, lectureNum] = _schedule.classNdataEvent(start_time, end_time, number)
+        timeList.insertAdjacentHTML('beforeend',`<li class="${className}" data-event="${lectureNum}"><a href="#"><div class="lecture-info">${_schedule.title(lecture)}${_schedule.location(location)}</div></a></li>`)
+    })
+}
 
-// export const scheduleInfo = (data) => {
-//     const {code, lecture, professor, location, start_time, end_time, dayofweek} = data
-//     const {startTime, endTime, lectureDay} = _converter.time2Str(start_time, end_time, dayofweek)
+export const scheduleInfo = (data) => {
+    const {code, lecture, professor, location, start_time, end_time, dayofweek} = data
+    const {startTime, endTime, lectureDay} = _converter.time2Str(start_time, end_time, dayofweek)
 
-//     const modal = $('#modal-lecture-task')
-//     const title = modal.find('.lecture-title')
-//     const modalInfo = modal.find('.lecture-info').children()
-//     const timeInfo = $(modalInfo[0]).find('span')
-//     const codeInfo = $(modalInfo[1]).find('span')
-//     const profInfo = $(modalInfo[2]).find('span')
-//     const locaInfo = $(modalInfo[3]).find('span')
+    const modal = $('#modal-lecture-task')
+    const title = modal.find('.lecture-title')
+    const modalInfo = modal.find('.lecture-info').children()
+    const timeInfo = $(modalInfo[0]).find('span')
+    const codeInfo = $(modalInfo[1]).find('span')
+    const profInfo = $(modalInfo[2]).find('span')
+    const locaInfo = $(modalInfo[3]).find('span')
 
-//     title.text(lecture)
-//     timeInfo.text(`${startTime} - ${endTime} | ${lectureDay}`)
-//     codeInfo.text(`교과목 코드 : ${code}`)
-//     profInfo.text(`담당 교수 : ${professor}`)
-//     locaInfo.text(`강의실 : ${location}`)
-// }
+    title.text(lecture)
+    timeInfo.text(`${startTime} - ${endTime} | ${lectureDay}`)
+    codeInfo.text(`교과목 코드 : ${code}`)
+    profInfo.text(`담당 교수 : ${professor}`)
+    locaInfo.text(`강의실 : ${location}`)
+}
 
 const _lecture = {
     title(title){
@@ -118,6 +118,5 @@ const _converter = {
 }
 
 export default {
-    searchList, lectureInfo, 
-    // addSchedule, scheduleInfo
+    searchList, lectureInfo, addSchedule, scheduleInfo
 }
