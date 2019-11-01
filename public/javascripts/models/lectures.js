@@ -1,6 +1,7 @@
 import _fetch from '../../utils/fetchUtil.js'
 
 const lecture = {
+    _openLecture: undefined,
     async searchLecture(query) {
         this.lecture = []
 
