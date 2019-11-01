@@ -5,15 +5,15 @@ import { _$, _$l, _chd } from '../utils/domUtil.js'
  * @param {Array} result 
  */
 export const searchList = (result) => {
-    return result.reduce((pre, cur) =>{
-        const {code, lecture, professor, location, start_time, end_time, dayofweek} = cur
+    return result.reduce((pre, cur) => {
+        const { code, lecture, professor, location, start_time, end_time, dayofweek } = cur
         return pre + `<li class="card-lecture">${_lecture.title(lecture)}${_lecture.time(start_time, end_time, dayofweek)}${_lecture.info(code, professor, location)}</li>`
-    },'')
+    }, '')
 }
 
 export const lectureInfo = (data) => {
-    const {code, lecture, professor, location, start_time, end_time, dayofweek} = data
-    const {startTime, endTime, lectureDay} = _converter.time2Str(start_time, end_time, dayofweek)
+    const { code, lecture, professor, location, start_time, end_time, dayofweek } = data
+    const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
 
     const modal = _$('modal-lecture-info')
     const title = modal.querySelector('.lecture-title')
@@ -41,13 +41,21 @@ export const addSchedule = (data, number) => {
     dayCol.forEach((col) => {
         const timeList = domList[col].querySelector('ul')
         const [className, lectureNum] = _schedule.classNdataEvent(start_time, end_time, number)
-        timeList.insertAdjacentHTML('beforeend',`<li class="${className}" data-event="${lectureNum}"><a href="#"><div class="lecture-info">${_schedule.title(lecture)}${_schedule.location(location)}</div></a></li>`)
+        timeList.insertAdjacentHTML('beforeend', `<li class="${className}" data-event="${lectureNum}"><a href="#"><div class="lecture-info">${_schedule.title(lecture)}${_schedule.location(location)}</div></a></li>`)
     })
 }
 
+export const memoOnTimeTable = (idx, title, content) =>{
+    const lectureCode = `lecture-${idx < 10 ? `0${idx}` : idx}`
+    console.log(lectureCode)
+    console.dir($(`[data-event="${lectureCode}"]`))
+    $(`[data-event="${lectureCode}"] > a`).append(_lecture.memo(title, content))
+}
+
 export const scheduleInfo = (data) => {
-    const {code, lecture, professor, location, start_time, end_time, dayofweek} = data
-    const {startTime, endTime, lectureDay} = _converter.time2Str(start_time, end_time, dayofweek)
+    const { schedule, memo } = data.schedule
+    const { code, lecture, professor, location, start_time, end_time, dayofweek } = schedule
+    const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
 
     const modal = $('#modal-lecture-task')
     const title = modal.find('.lecture-title')
@@ -56,60 +64,69 @@ export const scheduleInfo = (data) => {
     const codeInfo = $(modalInfo[1]).find('span')
     const profInfo = $(modalInfo[2]).find('span')
     const locaInfo = $(modalInfo[3]).find('span')
+    const memoList = modalInfo.last().find('ul')
 
     title.text(lecture)
     timeInfo.text(`${startTime} - ${endTime} | ${lectureDay}`)
     codeInfo.text(`교과목 코드 : ${code}`)
     profInfo.text(`담당 교수 : ${professor}`)
     locaInfo.text(`강의실 : ${location}`)
+
+    for (const item of memo){
+        const { title, content } = item
+        memoList.append(_schedule.memo(title, content))
+    }
 }
 
 const _lecture = {
-    title(title){
+    title(title) {
         return `<a class="lecture-title" href="#">${title}</a>`
     },
-    time(start,end,dayofweek){
-        const { startTime , endTime, lectureDay } = _converter.time2Str(start, end, dayofweek)
+    time(start, end, dayofweek) {
+        const { startTime, endTime, lectureDay } = _converter.time2Str(start, end, dayofweek)
 
         return `<h6 class="lecture-time"><i class="material-icons ic-lecture-info">access_time</i><span>${startTime} - ${endTime} | ${lectureDay}</span></h6>`
     },
-    info(code, prof, location){
+    info(code, prof, location) {
         return `<ul class="list-lecture-info"><li>교과목 코드 : ${code}</li><li>담당 교수 : ${prof}</li><li>강의실 : ${location}</li></ul>`
     },
+    memo(title, content){
+        return `<div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="${content}"><i class="material-icons ic-lecture-noti">assignment</i><span class="lecture-noti-title">${title}</span></div>`
+    }
 }
 
 const _schedule = {
-    classNdataEvent(startTime, endTime, number){
-        const className = `lecture-time ${startTime - endTime > 1 ? 'two-hr ': ''}hr-${startTime}`
-        const dataEvent = `lecture-${number < 10 ? `0${number}` : number }`
+    classNdataEvent(startTime, endTime, number) {
+        const className = `lecture-time ${startTime - endTime > 1 ? 'two-hr ' : ''}hr-${startTime}`
+        const dataEvent = `lecture-${number < 10 ? `0${number}` : number}`
 
         return [className, dataEvent]
     },
-    title(title){
+    title(title) {
         return `<h6 class="lecture-title">${title}</h6>`
     },
-    location(location){
+    location(location) {
         return `<h6 class="lecture-location">${location}</h6>`
     },
-    memo(memo, tooltip){
-        return `<div class="lecture-noti" data-toggle="tooltip" data-placement="top" title="" data-original-title="${tooltip}"><i class="material-icons ic-lecture-noti">assignment</i><span class="lecture-noti-title">${memo}</span></div>`
+    memo(title, content) {
+        return `<li class="memo-list"><div class="memo-content" data-toggle="tooltip" data-placement="top" title="" data-original-title="${content}"><i class="material-icons ic-lecture-noti">assignment</i><span class="lecture-noti-title">${title}</span></div><div class="memo-btn"><a href=""><i class="material-icons ic-lecture-noti">delete</i></a></div></li>`
     }
 }
 
 const _converter = {
-    time2Str(start, end, dayofweek){
+    time2Str(start, end, dayofweek) {
         const startTime = start < 10 ? `0${start}:00` : `${start}:00`
-        const endTime = end - 1 < 10 ? `0${end-1}:50` : `${end-1}:50`
+        const endTime = end - 1 < 10 ? `0${end - 1}:50` : `${end - 1}:50`
         let lectureDay = ''
-        for (const pos in dayofweek){
+        for (const pos in dayofweek) {
             lectureDay += `(${dayofweek[pos]})`
-            if (pos != dayofweek.length -1)
+            if (pos != dayofweek.length - 1)
                 lectureDay += ', ';
         }
 
-        return {startTime, endTime, lectureDay}
+        return { startTime, endTime, lectureDay }
     },
-    dayofweek2Int(day){
+    dayofweek2Int(day) {
         const dayWeek = ['월', '화', '수', '목', '금']
         for (const idx in dayWeek)
             if (day === dayWeek[idx]) return idx;
@@ -118,5 +135,5 @@ const _converter = {
 }
 
 export default {
-    searchList, lectureInfo, addSchedule, scheduleInfo
+    searchList, lectureInfo, addSchedule, scheduleInfo , memoOnTimeTable
 }

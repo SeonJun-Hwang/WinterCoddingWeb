@@ -1,6 +1,7 @@
 import renders from './renders.js'
 import lectures from './models/lectures.js'
 import timetable from './models/timetable.js'
+import validator from '../utils/validator.js'
 
 $('.list-lecture').click(event => {
     let target = event.target
@@ -22,7 +23,8 @@ $('.timeline-vertical > ul').click(event => {
     target = target.closest('.lecture-time')
     const dataEvent = target.data('event')
     const idx = dataEvent.replace(/[^0-9]/g,'')
-    renders.scheduleInfo(timetable.getSchedule(idx - 1))
+    timetable.setOpenSchedule(idx - 1)
+    renders.scheduleInfo(timetable.getOpenSchedule())
 
     $('#modal-lecture-task').modal('show');
 });
@@ -56,10 +58,23 @@ $('#regist-lecture').click(event => {
     $('#modal-lecture-info').modal('hide');
 })
 
+$(document.body).on('click','.btn-save' ,event =>{
+    const inputs = $('.popover-body').find('.form-control')
+    const titleEl = inputs[0]
+    const contentEl = inputs[1]
+    const title = titleEl.value
+    const content = contentEl.value
+
+    if (!validator.StringIsEmpty(title) && !validator.StringIsEmpty(content)){
+        timetable.setScheduleMemo(title, content)
+        const idx = timetable.getOpenScheduleIdx() + 1
+        renders.memoOnTimeTable(idx, title, content)
+    }
+})
+
 window.onload = () => {
     const today = new Date().getDay()
     if (0 < today && today < 6){
         $(`.list-lecture-item`).children(`:eq(${today - 1})`).children(`:first`).addClass('today')
     }
-    
 }
