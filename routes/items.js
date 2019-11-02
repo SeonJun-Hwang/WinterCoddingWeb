@@ -5,17 +5,34 @@ const Op = require('sequelize').Op;
 
 /* GET users listing. */
 router.get('/:lecture', async (req, res, next) => {
-  const query = req.params.lecture.replace(' ','');
-  if (query === undefined || query.length < 3) 
+  const query = req.params.lecture.replace(' ', '');
+  if (query === undefined || query.length < 3)
     res.json({})
-  else
-  {
+  else {
     const Item = models.Item
 
-    const ret = await Item.findAll({ where : { lecture : { [Op.like] : `%${query}%`}}}).then(res => res)
+    const ret = await Item.findAll({
+      where: {
+        [Op.or]: {
+          lecture: {
+            [Op.like]: `%${query}%`
+          },
+          code: {
+            [Op.like]: `%${query}%`
+          },
+          professor: {
+            [Op.like]: `%${query}%`
+          }
+        }
+      },
+      order: [
+        ['lecture', 'ASC']
+      ]
+    })
+      .then(res => res)
     res.json(ret)
   }
-  
+
 });
 
 module.exports = router;
