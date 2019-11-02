@@ -97,7 +97,7 @@ const _lecture = {
 
 const _schedule = {
     classNdataEvent(startTime, endTime, number) {
-        const className = `lecture-time ${startTime - endTime > 1 ? 'two-hr ' : ''}hr-${startTime}`
+        const className = `lecture-time ${endTime - startTime > 1 ? 'two-hr ' : ''}hr-${startTime}`
         const dataEvent = `lecture-${number < 10 ? `0${number}` : number}`
 
         return [className, dataEvent]
