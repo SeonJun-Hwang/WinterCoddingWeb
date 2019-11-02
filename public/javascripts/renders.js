@@ -5,10 +5,12 @@ import { _$, _$l, _chd } from '../utils/domUtil.js'
  * @param {Array} result 
  */
 export const searchList = (result) => {
-    return result.reduce((pre, cur) => {
+    const list = result.reduce((pre, cur) => {
         const { code, lecture, professor, location, start_time, end_time, dayofweek } = cur
         return pre + `<li class="card-lecture">${_lecture.title(lecture)}${_lecture.time(start_time, end_time, dayofweek)}${_lecture.info(code, professor, location)}</li>`
     }, '')
+
+    $('.list-lecture').html(list)
 }
 
 export const lectureInfo = (data) => {
@@ -50,8 +52,20 @@ export const memoOnTimeTable = (idx, title, content) =>{
     $(`[data-event="${lectureCode}"] > a`).append(_lecture.memo(title, content))
 }
 
+export const memoOnModal = (title, content) => {
+    $('.lecture-memo > ul').append(_modal.memo(title, content))
+}
+
+export const removeMemo = (lecIdx, memoIdx) => {
+    const lectureCode = `lecture-${lecIdx < 10 ? `0${lecIdx}` : lecIdx}`
+    const lectures = $(`[data-event="${lectureCode}"] > a`)
+
+    for (const lecture of lectures){
+        $(lecture).children('.lecture-noti').eq(memoIdx).remove()
+    }
+}
+
 export const scheduleInfo = (data) => {
-    console.dir(data)
     const { code, lecture, professor, location, start_time, end_time, dayofweek, memo } = data
     const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
 
@@ -70,6 +84,7 @@ export const scheduleInfo = (data) => {
     profInfo.text(`담당 교수 : ${professor}`)
     locaInfo.text(`강의실 : ${location}`)
 
+    memoList.empty();
     for (const item of memo){
         const { title, content } = item
         memoList.append(_schedule.memo(title, content))
@@ -111,6 +126,12 @@ const _schedule = {
     }
 }
 
+const _modal = {
+    memo(title, content){
+        return `<li class="memo-list"><div class="memo-content" data-toggle="tooltip" data-placement="top" title="" data-original-title="${content}"><i class="material-icons ic-lecture-noti">assignment</i><span class="lecture-noti-title">${title}</span></div><div class="memo-btn"><a href=""><i class="material-icons ic-lecture-noti">delete</i></a></div></li>`
+    }
+}
+
 const _converter = {
     time2Str(start, end, dayofweek) {
         const startTime = start < 10 ? `0${start}:00` : `${start}:00`
@@ -133,5 +154,5 @@ const _converter = {
 }
 
 export default {
-    searchList, lectureInfo, addSchedule, scheduleInfo , memoOnTimeTable
+    searchList, lectureInfo, addSchedule, scheduleInfo , memoOnTimeTable, memoOnModal, removeMemo
 }

@@ -30,7 +30,7 @@ const timetable = {
         return true;
     },
     setScheduleMemo(title, content) {
-        this._openSchedule.schedule.memo.push({ title, content })
+        this._openSchedule.memo.push({ title, content })
     },
     setOpenSchedule(idx) {
         this._openSchedule = this._schedules[idx] 
@@ -43,6 +43,9 @@ const timetable = {
     },
     getSchedule(idx) {
         return this._schedules[idx]
+    },
+    removeMemo(idx) {
+        this._openSchedule.memo.splice(idx, 1)
     }
 }
 

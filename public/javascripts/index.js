@@ -48,7 +48,7 @@ $(function () {
 $('#search-form > .form-control').keyup(async event => {
     const value = event.target.value
     const searchResult = await lectures.searchLecture(value)
-    $('.list-lecture').html(renders.searchList(searchResult))
+    renders.searchList(searchResult)
 })
 
 $('#regist-lecture').click(event => {
@@ -72,13 +72,26 @@ $(document.body).on('click','.btn-save' ,event =>{
 
     if (!validator.StringIsEmpty(title) && !validator.StringIsEmpty(content)){
         timetable.setScheduleMemo(title, content)
-        const idx = timetable.getOpenScheduleIdx() + 1
+        const idx = timetable.getOpenScheduleIdx()
         renders.memoOnTimeTable(idx, title, content)
+        renders.memoOnModal(title, content)
         alert('메모가 추가 되었습니다.')
     }
     else {
         alert('제목 또는 내용에 빈 값이 존재합니다.')
     }
+})
+
+$(document.body).on('click','.memo-btn' , event =>{
+    event.preventDefault()
+
+    const li = $(event.target).closest('li')[0]
+    const ul = $(event.target).closest('ul')
+    const idx = ul.children().index(li)
+
+    timetable.removeMemo(idx)
+    renders.removeMemo(timetable.getOpenScheduleIdx(), idx)
+    ul.children().eq(idx).remove();
 })
 
 window.onload = () => {
