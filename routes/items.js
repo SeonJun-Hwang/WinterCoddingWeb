@@ -6,7 +6,7 @@ const Op = require('sequelize').Op;
 /* GET users listing. */
 router.get('/:lecture', async (req, res, next) => {
   const query = req.params.lecture.replace(' ', '');
-  if (query === undefined || query.length < 3)
+  if (query === undefined || query.length < 2)
     res.json({})
   else {
     const Item = models.Item
