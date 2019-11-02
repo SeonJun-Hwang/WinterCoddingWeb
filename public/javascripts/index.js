@@ -52,14 +52,16 @@ $('#search-form > .form-control').keyup(async event => {
 })
 
 $('#regist-lecture').click(event => {
-    if (timetable.isAddable(lectures.getOpenLecture())){
+    const status = timetable.isAddable(lectures.getOpenLecture())
+    if (status === 'OK'){
         const number = timetable.addSchedule(lectures.getOpenLecture())
         renders.addSchedule(lectures.getOpenLecture(), number)
         alert('추가 되었습니다.')
         $('#modal-lecture-info').modal('hide');
     }
     else{
-        alert('해당 시간에 다른 과목이 존재합니다.')
+        if (status === 'MAX') alert('강의는 최대 10개까지만 추가 가능합니다.')
+        else alert('해당 시간에 다른 과목이 존재합니다.')
     }
 })
 
@@ -84,7 +86,7 @@ $(document.body).on('click','.btn-save' ,event =>{
 
 $(document.body).on('click','.btn-remove' ,event =>{
     const idx = timetable.getOpenScheduleIdx()
-    timetable.removeSchedule(idx)
+    timetable.removeSchedule(idx - 1)
     renders.removeSchedule(idx)
 
     $('#modal-lecture-task').modal('hide')

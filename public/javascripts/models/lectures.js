@@ -14,7 +14,6 @@ const lecture = {
                     value.description = value.description.replace(/_/g, ' ')
                     return value
                 })
-                console.dir(this.lecture)
             }
         }
 

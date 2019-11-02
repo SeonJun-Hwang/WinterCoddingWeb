@@ -1,16 +1,23 @@
 const timetable = {
-    _schedules: [],
+    _schedules: [null,null,null,null,null,null,null,null,null,null],
+    _onCnt:0,
     _openSchedule: undefined,
     addSchedule(schedule) {
-        schedule['memo'] = []
-        schedule['idx'] = this._schedules.length + 1;
-        this._schedules.push(schedule)
-
-        return this._schedules.length
+        for (let pos = 0 ; pos < this._schedules.length; pos++){
+            if (this._schedules[pos] !== null) continue;
+      
+            schedule['memo'] = []
+            schedule['idx'] = pos + 1;
+            this._schedules[pos] = schedule
+            this._onCnt++;
+            return pos + 1;
+        }
     },
     isAddable(lecture) {
+        if (this._onCnt == 9) return 'MAX';
 
         for (const schedule of this._schedules) {
+            if (schedule === null) continue;
             const { start_time, end_time, dayofweek } = schedule
 
             // 요일을 하루 단위로 체크
@@ -23,11 +30,11 @@ const timetable = {
                     const lecEndInt = parseInt(lecture.end_time)
                     if ((startInt <= lecStartInt && lecStartInt < endInt) ||
                         (startInt < lecEndInt && lecEndInt <= endInt))
-                        return false;
+                        return 'ALREADY';
                 }
             }
         }
-        return true;
+        return 'OK';
     },
     setScheduleMemo(title, content) {
         this._openSchedule.memo.push({ title, content })
@@ -48,7 +55,8 @@ const timetable = {
         this._openSchedule.memo.splice(idx, 1)
     },
     removeSchedule(idx){
-        this._schedules.splice(idx, 1)
+        this._onCnt--;
+        this._schedules[idx] = null
     }
 }
 
