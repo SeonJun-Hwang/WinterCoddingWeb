@@ -2,26 +2,45 @@ const timetable = {
     _schedules: [],
     _openSchedule: undefined,
     addSchedule(schedule) {
-        this._schedules.push({schedule, memo: []})
+        schedule['memo'] = []
+        this._schedules.push(schedule)
 
         return this._schedules.length
     },
-    isAddable(schedules) {
+    isAddable(lecture) {
 
+        for (const schedule of this._schedules) {
+            const { start_time, end_time, dayofweek } = schedule
+
+            // 요일을 하루 단위로 체크
+            for (const day of lecture.dayofweek) {
+                // For es5 
+                if (dayofweek.indexOf(day) !== -1) {
+                    const startInt = parseInt(start_time)
+                    const endInt = parseInt(end_time)
+                    const lecStartInt = parseInt(lecture.start_time)
+                    const lecEndInt = parseInt(lecture.end_time)
+                    if ((startInt <= lecStartInt && lecStartInt < endInt) ||
+                        (startInt < lecEndInt && lecEndInt <= endInt))
+                        return false;
+                }
+            }
+        }
+        return true;
     },
-    setScheduleMemo(title, content){
-        this._openSchedule.schedule.memo.push({title, content})
+    setScheduleMemo(title, content) {
+        this._openSchedule.schedule.memo.push({ title, content })
     },
-    setOpenSchedule(idx){
-        this._openSchedule = {idx, schedule: this._schedules[idx]}
+    setOpenSchedule(idx) {
+        this._openSchedule = { idx, schedule: this._schedules[idx] }
     },
-    getOpenSchedule(){
+    getOpenSchedule() {
         return this._openSchedule
     },
-    getOpenScheduleIdx(){
+    getOpenScheduleIdx() {
         return this._openSchedule.idx
     },
-    getSchedule(idx){
+    getSchedule(idx) {
         return this._schedules[idx]
     }
 }

@@ -52,10 +52,15 @@ $('#search-form > .form-control').keyup(async event => {
 })
 
 $('#regist-lecture').click(event => {
-    const number = timetable.addSchedule(lectures.getOpenLecture())
-    renders.addSchedule(lectures.getOpenLecture(), number)
-
-    $('#modal-lecture-info').modal('hide');
+    if (timetable.isAddable(lectures.getOpenLecture())){
+        const number = timetable.addSchedule(lectures.getOpenLecture())
+        renders.addSchedule(lectures.getOpenLecture(), number)
+        alert('추가 되었습니다.')
+        $('#modal-lecture-info').modal('hide');
+    }
+    else{
+        alert('해당 시간에 다른 과목이 존재합니다.')
+    }
 })
 
 $(document.body).on('click','.btn-save' ,event =>{
