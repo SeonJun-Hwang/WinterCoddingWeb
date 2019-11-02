@@ -14,22 +14,24 @@ export const searchList = (result) => {
 }
 
 export const lectureInfo = (data) => {
-    const { code, lecture, professor, location, start_time, end_time, dayofweek } = data
+    const { code, lecture, professor, location, start_time, end_time, description ,dayofweek } = data
     const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
 
-    const modal = _$('modal-lecture-info')
-    const title = modal.querySelector('.lecture-title')
-    const modalInfo = _chd(modal.querySelector('.lecture-info'))
-    const timeInfo = modalInfo[0].querySelector('span')
-    const codeInfo = modalInfo[1].querySelector('span')
-    const profInfo = modalInfo[2].querySelector('span')
-    const locaInfo = modalInfo[3].querySelector('span')
+    const modal = $('#modal-lecture-info')
+    const title = modal.find('.lecture-title')
+    const modalInfo = modal.find('.lecture-info').children()
+    const timeInfo = modalInfo.eq(0)
+    const codeInfo = modalInfo.eq(1)
+    const profInfo = modalInfo.eq(2)
+    const locaInfo = modalInfo.eq(3)
+    const descInfo = modal.find('.txt-description')
 
-    title.innerText = lecture
-    timeInfo.innerText = `${startTime} - ${endTime} | ${lectureDay}`
-    codeInfo.innerText = `교과목 코드 : ${code}`
-    profInfo.innerText = `담당 교수 : ${professor}`
-    locaInfo.innerText = `강의실 : ${location}`
+    title.text(lecture)
+    timeInfo.text(`${startTime} - ${endTime} | ${lectureDay}`)
+    codeInfo.text(`교과목 코드 : ${code}`)
+    profInfo.text(`담당 교수 : ${professor}`)
+    locaInfo.text(`강의실 : ${location}`)
+    descInfo.text(description)
 }
 
 export const addSchedule = (data, number) => {
@@ -73,23 +75,25 @@ export const removeSchedule = (idx) => {
 }
 
 export const scheduleInfo = (data) => {
-    const { code, lecture, professor, location, start_time, end_time, dayofweek, memo } = data
+    const { code, lecture, professor, location, start_time, end_time, description ,dayofweek, memo } = data
     const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
 
     const modal = $('#modal-lecture-task')
     const title = modal.find('.lecture-title')
     const modalInfo = modal.find('.lecture-info').children()
-    const timeInfo = $(modalInfo[0]).find('span')
-    const codeInfo = $(modalInfo[1]).find('span')
-    const profInfo = $(modalInfo[2]).find('span')
-    const locaInfo = $(modalInfo[3]).find('span')
-    const memoList = modalInfo.last().find('ul')
+    const timeInfo = modalInfo.eq(0)
+    const codeInfo = modalInfo.eq(1)
+    const profInfo = modalInfo.eq(2)
+    const locaInfo = modalInfo.eq(3)
+    const descInfo = modal.find('.txt-description')
+    const memoList = modalInfo.find('ul')
 
     title.text(lecture)
     timeInfo.text(`${startTime} - ${endTime} | ${lectureDay}`)
     codeInfo.text(`교과목 코드 : ${code}`)
     profInfo.text(`담당 교수 : ${professor}`)
     locaInfo.text(`강의실 : ${location}`)
+    descInfo.text(description)
 
     memoList.empty();
     for (const item of memo){

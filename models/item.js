@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     start_time: DataTypes.STRING,
     end_time: DataTypes.STRING,
+    description: DataTypes.STRING(500),
     dayofweek: DataTypes.STRING,
   }, {
     timestamps: true,

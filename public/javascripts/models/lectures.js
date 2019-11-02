@@ -8,7 +8,14 @@ const lecture = {
         if (query.length >= 2) {
             const result = await _fetch.fetchAwait(`/api/${query}`, _fetch.option.get)
 
-            if (Array.isArray(result)) this.lecture = result
+            if (Array.isArray(result)) {
+                this.lecture = result.map(value=> {
+                    // Remove Underline(_)
+                    value.description = value.description.replace(/_/g, ' ')
+                    return value
+                })
+                console.dir(this.lecture)
+            }
         }
 
         return this.lecture
