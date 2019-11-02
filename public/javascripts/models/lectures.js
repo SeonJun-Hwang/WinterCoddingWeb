@@ -6,7 +6,7 @@ const lecture = {
         this.lecture = []
 
         if (query.length >= 2) {
-            const result = await _fetch.fetchAwait(`/api/${query}`, _fetch.option.get)
+            const result = await _fetch.fetchAwait(`/api/${query}`, _fetch.option.post)
 
             if (Array.isArray(result)) {
                 this.lecture = result.map(value=> {

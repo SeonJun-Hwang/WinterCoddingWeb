@@ -3,8 +3,8 @@ var router = express.Router();
 const models = require('../models')
 const Op = require('sequelize').Op;
 
-/* GET users listing. */
-router.get('/:lecture', async (req, res, next) => {
+/* POST users listing. */
+router.post('/:lecture', async (req, res, next) => {
   const query = req.params.lecture.replace(' ', '');
   if (query === undefined || query.length < 2)
     res.json({})
