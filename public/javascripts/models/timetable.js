@@ -3,6 +3,7 @@ const timetable = {
     _openSchedule: undefined,
     addSchedule(schedule) {
         schedule['memo'] = []
+        schedule['idx'] = this._schedules.length + 1;
         this._schedules.push(schedule)
 
         return this._schedules.length
@@ -32,7 +33,7 @@ const timetable = {
         this._openSchedule.schedule.memo.push({ title, content })
     },
     setOpenSchedule(idx) {
-        this._openSchedule = { idx, schedule: this._schedules[idx] }
+        this._openSchedule = this._schedules[idx] 
     },
     getOpenSchedule() {
         return this._openSchedule

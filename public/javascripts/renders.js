@@ -47,14 +47,12 @@ export const addSchedule = (data, number) => {
 
 export const memoOnTimeTable = (idx, title, content) =>{
     const lectureCode = `lecture-${idx < 10 ? `0${idx}` : idx}`
-    console.log(lectureCode)
-    console.dir($(`[data-event="${lectureCode}"]`))
     $(`[data-event="${lectureCode}"] > a`).append(_lecture.memo(title, content))
 }
 
 export const scheduleInfo = (data) => {
-    const { schedule, memo } = data.schedule
-    const { code, lecture, professor, location, start_time, end_time, dayofweek } = schedule
+    console.dir(data)
+    const { code, lecture, professor, location, start_time, end_time, dayofweek, memo } = data
     const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
 
     const modal = $('#modal-lecture-task')

@@ -74,6 +74,10 @@ $(document.body).on('click','.btn-save' ,event =>{
         timetable.setScheduleMemo(title, content)
         const idx = timetable.getOpenScheduleIdx() + 1
         renders.memoOnTimeTable(idx, title, content)
+        alert('메모가 추가 되었습니다.')
+    }
+    else {
+        alert('제목 또는 내용에 빈 값이 존재합니다.')
     }
 })
 
