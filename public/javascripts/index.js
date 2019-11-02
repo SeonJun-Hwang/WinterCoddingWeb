@@ -82,6 +82,14 @@ $(document.body).on('click','.btn-save' ,event =>{
     }
 })
 
+$(document.body).on('click','.btn-remove' ,event =>{
+    const idx = timetable.getOpenScheduleIdx()
+    timetable.removeSchedule(idx)
+    renders.removeSchedule(idx)
+
+    $('#modal-lecture-task').modal('hide')
+})
+
 $(document.body).on('click','.memo-btn' , event =>{
     event.preventDefault()
 

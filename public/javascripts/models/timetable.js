@@ -46,6 +46,9 @@ const timetable = {
     },
     removeMemo(idx) {
         this._openSchedule.memo.splice(idx, 1)
+    },
+    removeSchedule(idx){
+        this._schedules.splice(idx, 1)
     }
 }
 

@@ -65,6 +65,13 @@ export const removeMemo = (lecIdx, memoIdx) => {
     }
 }
 
+export const removeSchedule = (idx) => {
+    const lectureCode = `lecture-${idx < 10 ? `0${idx}` : idx}`
+    const lectures = $(`[data-event="${lectureCode}"]`)
+
+    lectures.remove();
+}
+
 export const scheduleInfo = (data) => {
     const { code, lecture, professor, location, start_time, end_time, dayofweek, memo } = data
     const { startTime, endTime, lectureDay } = _converter.time2Str(start_time, end_time, dayofweek)
@@ -154,5 +161,5 @@ const _converter = {
 }
 
 export default {
-    searchList, lectureInfo, addSchedule, scheduleInfo , memoOnTimeTable, memoOnModal, removeMemo
+    searchList, lectureInfo, addSchedule, scheduleInfo , memoOnTimeTable, memoOnModal, removeMemo, removeSchedule
 }
